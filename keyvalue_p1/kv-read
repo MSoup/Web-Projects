@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+import argparse
+import json
+
+parser = argparse.ArgumentParser(description='Get Ghibli Films', usage="kv-read -k KEY -d FILENAME")
+
+parser.add_argument('-k', dest='k',required=True,help='request key k from dictionary')
+parser.add_argument('-d', dest='d',required=True, help='choose dictionary to acquire key from')
+
+args = parser.parse_args()
+
+try:
+    with open(args.d, 'r') as f:
+        d = json.load(f)
+        try:
+            print(d[args.k])
+        except KeyError:
+            print(f'Error: No data for key \"{args.k}\" found in data file "{args.d}"')
+except:
+    print(f'Error: Data file "{args.d}" not found')
